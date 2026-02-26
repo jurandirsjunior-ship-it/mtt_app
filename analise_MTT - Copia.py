@@ -24,24 +24,26 @@ st.title("🧪 Análise MTT - Placa 96 Poços")
 # =========================
 # LOGO (opcional)
 # =========================
-# st.markdown(
-#     """
-#     <style>
-#     .logo-container {
-#         position: fixed;
-#         top: 15px;
-#         right: 30px;
-#         z-index: 1000;
-#     }
-#     </style>
-#     <div class="logo-container">
-#         <img src="data:image/png;base64,{}" width="120">
-#     </div>
-#     """.format(
-#         base64.b64encode(open("logo_lab.png", "rb").read()).decode()
-#     ),
-#     unsafe_allow_html=True
-# )
+
+with open("logo.png", "rb") as f:
+    logo_base64 = base64.b64encode(f.read()).decode()
+
+st.markdown(
+    f"""
+    <style>
+    .logo-container {{
+        position: fixed;
+        top: 15px;
+        right: 30px;
+        z-index: 1000;
+    }}
+    </style>
+    <div class="logo-container">
+        <img src="data:image/png;base64,{logo_base64}" width="120">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # =========================
 # FUNÇÃO PARA LER ARQUIVO
@@ -272,4 +274,5 @@ if "df_viab" in st.session_state:
         file_name=f"grafico_MTT.{formato.lower()}",
         mime=f"image/{formato.lower()}"
     )
+
 
