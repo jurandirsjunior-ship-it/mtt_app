@@ -246,21 +246,30 @@ if "df_viab" in st.session_state:
     ax.set_ylim(0, 150)
     plt.xticks(rotation=45)
     st.pyplot(fig)
+    
+    # Salva figura no session_state
+    st.session_state.figura_grafico = fig
 
-# =========================
-# BOTÃO PARA BAIXAR IMAGEM
-# =========================
-formato = st.selectbox("Formato da imagem:", ["PNG", "PDF", "SVG"])
+    # =========================
+    # BOTÃO DOWNLOAD
+    # =========================
+    st.subheader("📥 Exportar gráfico")
 
-buffer = io.BytesIO()
-fig.savefig(buffer, format=formato.lower(), dpi=300, bbox_inches="tight")
-buffer.seek(0)
+    formato = st.selectbox("Formato:", ["PNG", "PDF", "SVG"])
 
-st.download_button(
-    label=f"📥 Baixar gráfico em {formato}",
-    data=buffer,
-    file_name=f"grafico_MTT.{formato.lower()}",
-    mime=f"image/{formato.lower()}"
-)
-       
+    buffer = io.BytesIO()
+    st.session_state.figura_grafico.savefig(
+        buffer,
+        format=formato.lower(),
+        dpi=300,
+        bbox_inches="tight"
+    )
+    buffer.seek(0)
+
+    st.download_button(
+        label=f"Baixar em {formato}",
+        data=buffer,
+        file_name=f"grafico_MTT.{formato.lower()}",
+        mime=f"image/{formato.lower()}"
+    )
 
