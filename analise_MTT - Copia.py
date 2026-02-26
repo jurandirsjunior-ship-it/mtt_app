@@ -114,7 +114,7 @@ if arquivo:
     # Heatmap
     st.subheader("📊 Heatmap da placa (Absorbância)")
     fig_heat, ax = plt.subplots(figsize=(8, 5))
-    sns.heatmap(df_raw.astype(float), cmap="viridis",
+    sns.heatmap(df_raw.astype(float), cmap="viridis_r",
                 annot=True, fmt=".2f", ax=ax,
                 cbar_kws={'label': 'Absorbância'})
     st.pyplot(fig_heat)
@@ -274,5 +274,6 @@ if "df_viab" in st.session_state:
         file_name=f"grafico_MTT.{formato.lower()}",
         mime=f"image/{formato.lower()}"
     )
+
 
 
