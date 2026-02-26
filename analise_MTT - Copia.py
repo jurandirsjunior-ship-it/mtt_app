@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import io
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -245,4 +246,21 @@ if "df_viab" in st.session_state:
     ax.set_ylim(0, 150)
     plt.xticks(rotation=45)
     st.pyplot(fig)
+
+# =========================
+# BOTÃO PARA BAIXAR IMAGEM
+# =========================
+formato = st.selectbox("Formato da imagem:", ["PNG", "PDF", "SVG"])
+
+buffer = io.BytesIO()
+fig.savefig(buffer, format=formato.lower(), dpi=300, bbox_inches="tight")
+buffer.seek(0)
+
+st.download_button(
+    label=f"📥 Baixar gráfico em {formato}",
+    data=buffer,
+    file_name=f"grafico_MTT.{formato.lower()}",
+    mime=f"image/{formato.lower()}"
+)
        
+
